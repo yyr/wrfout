@@ -1,0 +1,40 @@
+#!/usr/bin/env python
+
+import os
+import subprocess
+import fnmatch
+import re
+
+my_env=os.environ.copy()
+my_env["NCL_LIB"] = '~/nsc/ncl-lib/'
+wrf_dom = ""
+
+try:
+    with open('run_dirs') as f:
+        run_dirs = f.read().split()
+except IOError as e:
+    run_dirs=["."]
+
+def set_ncl_fin(env):
+    # reg= fnmatch.translate('wrfout*3')
+    # print(reg)
+    # reobj = re.compile(reg)
+    for f in os.listdir('.'):
+        if fnmatch.fnmatch(f, '*d0' + wrf_dom + '*'):
+            env["NCL_FIN"] = f
+            return env
+
+def run_ncl(dir):
+    global my_env
+    os.chdir(dir)
+    print("Entered into: " + os.path.abspath("."))
+    my_env = set_ncl_fin(my_env)
+
+#        subprocess.Popen("ncl ", env=my_env, shell=False)
+
+def main():
+    for dir in run_dirs:
+        return run_ncl(dir)
+
+if __name__ == '__main__':
+    main()
