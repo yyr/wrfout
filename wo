@@ -41,15 +41,18 @@ def run_ncl(dir):
     print("Entered into: " + os.path.abspath("."))
     my_env = set_ncl_fin(my_env)
 
-    # with open("wo.log.out","wb") as out:
-    #     with open("wo.log.err","wb") as err:
-    subprocess.Popen("ncl " + wo_path + "/wo_plot2d.ncl", env=my_env,
-                     shell=True,universal_newlines=True)
-                     # stdout=out, stderr=err)
+    with open("wo.log.out","w") as out:
+        with open("wo.log.err","w") as err:
+            print("creating ncl process ...")
+            subprocess.Popen("ncl " + wo_path + "/wo_plot2d.ncl", env=my_env,
+                             shell=True,universal_newlines=True,
+                             stdout=out, stderr=err)
 
 def main():
     for dir in run_dirs:
-        return run_ncl(dir)
+        run_ncl(dir)
+
+    return
 
 if __name__ == '__main__':
     main()
