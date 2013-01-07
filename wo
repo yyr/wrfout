@@ -7,15 +7,18 @@ import fnmatch
 import re
 import inspect
 
-my_env=os.environ.copy()
-my_env["NCL_LIB"] = '~/nsc/ncl-lib/'
-wrf_dom = ""
-
 wo_path = os.path.abspath(os.path.split(inspect.getfile(
     inspect.currentframe()))[0])
 
 if wo_path not in sys.path:
     sys.path.insert(0, wo_path)
+
+my_env=os.environ.copy()
+my_env["NCL_LIB"] = os.path.join(my_env["HOME"], 'nsc/ncl-lib/')
+my_env["WRFOUT"] = wo_path
+
+wrf_dom = "3"
+
 
 try:
     with open('run_dirs') as f:
@@ -38,7 +41,7 @@ def run_ncl(dir):
     print("Entered into: " + os.path.abspath("."))
     my_env = set_ncl_fin(my_env)
 
-    # subprocess.Popen("ncl " + wo_path + "/var_list.ncl", env=my_env, shell=True)
+    subprocess.Popen("ncl " + wo_path + "/wo_plot2d.ncl", env=my_env, shell=True)
 
 
 def main():
