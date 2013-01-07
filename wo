@@ -1,13 +1,21 @@
 #!/usr/bin/env python
 
 import os
+import sys
 import subprocess
 import fnmatch
 import re
+import inspect
 
 my_env=os.environ.copy()
 my_env["NCL_LIB"] = '~/nsc/ncl-lib/'
 wrf_dom = ""
+
+wo_path = os.path.abspath(os.path.split(inspect.getfile(
+    inspect.currentframe()))[0])
+
+if wo_path not in sys.path:
+    sys.path.insert(0, wo_path)
 
 try:
     with open('run_dirs') as f:
@@ -30,7 +38,8 @@ def run_ncl(dir):
     print("Entered into: " + os.path.abspath("."))
     my_env = set_ncl_fin(my_env)
 
-#        subprocess.Popen("ncl ", env=my_env, shell=False)
+    # subprocess.Popen("ncl " + wo_path + "/var_list.ncl", env=my_env, shell=True)
+
 
 def main():
     for dir in run_dirs:
