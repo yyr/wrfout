@@ -1,0 +1,9 @@
+* TODO list of plots
+- [ ] wind, geopotential height at 1000, 500, 200
+- [ ] sea ice cover
+- [ ] surface temperature
+- [ ] skin temperature
+- [ ] precipitation
+- [ ] accumulated precipitation
+- [ ] snow cover
+- [ ] weight vars (cloud, snow, water vapor)
