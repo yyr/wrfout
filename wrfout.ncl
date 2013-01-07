@@ -6,86 +6,92 @@ begin
 
   a = set_inputfile()
   type = "png"
-  times_in_file = a->Times
+  out_prefix="wo_"
 
   plot_list = (/"QSNOW"/)
 
-  varname = "QSNOW"
-  noflevels = 32                ; how many layers should be added
+  do var = 0, dim_len0(plot_list) - 1, 1
+    varname = plot_list(var)
 
-  xlat = a->XLAT(0,:,:)
-  xlon = a->XLONG(0,:,:)
+    times_in_file = a->Times
+    xlat = a->XLAT(0,:,:)
+    xlon = a->XLONG(0,:,:)
 
-  do it = 0, dim_len0(times_in_file) - 1 , 1
+    announce("Working with:" + varname(var))
 
-    print("working with: " + chartostring(times_in_file(it,:)))
+    if ( varname .eq. "QSNOW" ) then
+      out_prefix = out_prefix + "qs"
+      noflevels = 32                ; how many layers should be added
 
-    out = "qs_over" + chartostring(times_in_file(it,4:12)) + "_" + \
-            chartostring(times_in_file(it,14:15))
+      do it = 0, dim_len0(times_in_file) - 1 , 1
+        print("working with: " + chartostring(times_in_file(it,:)))
 
-    wks = gsn_open_wks(type,out)
+        out = out_prefix + chartostring(times_in_file(it,4:12)) + "_" + \
+                chartostring(times_in_file(it,14:15))
 
-    wgted_var = wrf_user_getvar_weighted_sum(a,varname,it)
-    wgted_var = wgted_var * 1000. ;
-    wgted_var@units = "g"
+        wks = gsn_open_wks(type,out)
 
-    res = True
-    res@TimeLabel = times(it)   ; Set Valid time to use on plots
+        wgted_var = wrf_user_getvar_weighted_sum(a,varname,it)
+        wgted_var = wgted_var * 1000. ;
+        wgted_var@units = "g"
 
-    opts = res
-    opts@ContourParameters = (/ 0., 1.6, .1 /)
-    opts@sfXArray = xlon
-    opts@sfYArray = xlat
-    opts@cnLevelFlags = False
-    contour = wrf_contour(a,wks,wgted_var,opts)
+        res = True
+        res@TimeLabel = chartostring(times_in_file(it,:))
 
-    optsT = res
-    optsT@sfXArray = xlon
-    optsT@sfYArray = xlat
-    optsT@cnFillOn  = True
-    optsT@cnFillColor = True
-    optsT@ContourParameters = (/ 250.,285., 0.5 /)
-    optsT = set_no_frame_res(optsT)
+        opts = res
+        opts@ContourParameters = (/ 0., 1.6, .1 /)
+        opts@sfXArray = xlon
+        opts@sfYArray = xlat
+        opts@cnLevelFlags = False
+        contour = wrf_contour(a,wks,wgted_var,opts)
 
-    t2 = wrf_user_getvar(a,"T2",it)
-    contour_t = wrf_contour(a,wks,t2,optsT)
+        optsT = res
+        optsT@sfXArray = xlon
+        optsT@sfYArray = xlat
+        optsT@cnFillOn  = True
+        optsT@cnFillColor = True
+        optsT@ContourParameters = (/ 250.,285., 0.5 /)
+        optsT = set_no_frame_res(optsT)
 
-    cres = res
-    cres@cnFillOn         = False
-    cres@cnLevelFlags = True
-    cres@cnLineColor = "White"
-    cres@cnLineThicknessF = 2.3
-    cres@sfXArray = xlon
-    cres@sfYArray = xlat
+        t2 = wrf_user_getvar(a,"T2",it)
+        contour_t = wrf_contour(a,wks,t2,optsT)
 
-    slp = wrf_user_getvar(a,"slp",it)
-    cres@ContourParameters = (/ 970., 1035., 1 /)
-    contour_slp = wrf_contour(a,wks,slp,cres)
+        cres = res
+        cres@cnFillOn         = False
+        cres@cnLevelFlags = True
+        cres@cnLineColor = "White"
+        cres@cnLineThicknessF = 2.3
+        cres@sfXArray = xlon
+        cres@sfYArray = xlat
 
-    ;;-- plot/overlay all  --
-    pltres = True ; Plot resources
-    pltres = set_wrf_no_headers(pltres)
-    pltres = set_tm_size_res(res)
-    pltres@LatLonOverlay = True ; Don't do an NDC overlay
+        slp = wrf_user_getvar(a,"slp",it)
+        cres@ContourParameters = (/ 970., 1035., 1 /)
+        contour_slp = wrf_contour(a,wks,slp,cres)
 
-    mpres  = True  ; Map resources
-    mpres = set_high_res_coast(mpres)
-    mpres = set_map_latlon_res(mpres,139.,145.5,43.,48.)
-    mpres = set_wrf_no_headers(mpres)
+        ;;-- plot/overlay all  --
+        pltres = True ; Plot resources
+        pltres = set_wrf_no_headers(pltres)
+        pltres = set_tm_size_res(res)
+        pltres@LatLonOverlay = True ; Don't do an NDC overlay
 
-    mpres = set_tm_size_res(mpres)
-    mpres@lbOrientation = "vertical"
+        mpres  = True  ; Map resources
+        mpres = set_high_res_coast(mpres)
+        mpres = set_map_latlon_res(mpres,139.,145.5,43.,48.)
+        mpres = set_wrf_no_headers(mpres)
 
-    plot = wrf_map_overlays(a,wks,(/contour_t,contour_slp,contour/),pltres,mpres)
+        mpres = set_tm_size_res(mpres)
+        mpres@lbOrientation = "vertical"
 
-    tit = chartostring(times_in_file(it,5:15))
-    anno_top_left(wks,plot,tit)
+        plot = wrf_map_overlays(a,wks,(/contour_t,contour_slp,contour/),pltres,mpres)
 
-    draw(wks)
-    frame(wks)
+        tit = chartostring(times_in_file(it,5:15))
+        anno_top_left(wks,plot,tit)
 
+        draw(wks)
+        frame(wks)
+
+      end do
+    end if
   end do
-
-  print("wo_plot2d.ncl is done")
-
+  print("wrfout.ncl is done")
 end
