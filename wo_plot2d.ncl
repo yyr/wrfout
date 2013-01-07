@@ -84,4 +84,6 @@ begin
 
   end do
 
+  print("wo_plot2d.ncl is done")
+
 end
