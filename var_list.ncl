@@ -15,7 +15,7 @@ local vars2d
 
 begin
   vars2d = (/ \
-          (/"SEAICE"/) \
+          (/"SEAICE"/), \
           (/"QSNOW"/) \
           /)
   return(vars2d)
