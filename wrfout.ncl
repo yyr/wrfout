@@ -6,29 +6,31 @@ begin
 
   a = set_inputfile()
   type = "png"
-
-  times  = wrf_user_list_times(a)
   times_in_file = a->Times
+
+  plot_list = (/"QSNOW"/)
+
   varname = "QSNOW"
   noflevels = 32                ; how many layers should be added
 
   xlat = a->XLAT(0,:,:)
   xlon = a->XLONG(0,:,:)
 
-  do it = 0, dim_len0(times) - 1 , 1
-    vt = it
-    print("working with: " + times(vt))
+  do it = 0, dim_len0(times_in_file) - 1 , 1
+
+    print("working with: " + chartostring(times_in_file(it,:)))
 
     out = "qs_over" + chartostring(times_in_file(it,4:12)) + "_" + \
             chartostring(times_in_file(it,14:15))
+
     wks = gsn_open_wks(type,out)
 
-    wgted_var = wrf_user_getvar_weighted_sum(a,varname,vt)
+    wgted_var = wrf_user_getvar_weighted_sum(a,varname,it)
     wgted_var = wgted_var * 1000. ;
     wgted_var@units = "g"
 
     res = True
-    res@TimeLabel = times(vt)   ; Set Valid time to use on plots
+    res@TimeLabel = times(it)   ; Set Valid time to use on plots
 
     opts = res
     opts@ContourParameters = (/ 0., 1.6, .1 /)
@@ -45,7 +47,7 @@ begin
     optsT@ContourParameters = (/ 250.,285., 0.5 /)
     optsT = set_no_frame_res(optsT)
 
-    t2 = wrf_user_getvar(a,"T2",vt)
+    t2 = wrf_user_getvar(a,"T2",it)
     contour_t = wrf_contour(a,wks,t2,optsT)
 
     cres = res

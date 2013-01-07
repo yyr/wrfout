@@ -44,7 +44,7 @@ def run_ncl(dir):
     with open("wo.log.out","w") as out:
         with open("wo.log.err","w") as err:
             print("creating ncl process ...")
-            subprocess.Popen("ncl " + wo_path + "/wo_plot2d.ncl", env=my_env,
+            subprocess.Popen("ncl " + wo_path + "/wrfout.ncl", env=my_env,
                              shell=True,universal_newlines=True,
                              stdout=out, stderr=err)
 
