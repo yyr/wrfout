@@ -27,13 +27,20 @@ def set_ncl_fin(env):
     for f in os.listdir('.'):
         if fnmatch.fnmatch(f, '*d0' + wrf_dom + '*'):
             env["NCL_FIN"] = f
-            return env
+        else:
+            env["NCL_FIN"] = None
+
+    return env
 
 def run_ncl(dir):
     global my_env
     os.chdir(dir)
     print("Entered into: " + os.path.abspath("."))
     my_env = set_ncl_fin(my_env)
+
+    if my_env['NCL_FIN'] is None:
+        print("No input file is found, Aborting!!")
+        sys.exit()
 
     with open("wo.log.out","w") as out:
         with open("wo.log.err","w") as err:
