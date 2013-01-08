@@ -89,8 +89,10 @@ begin
 
         draw(wks)
         frame(wks)
-
       end do
+
+      make_animation(out_prefix,type)
+
     end if
   end do
   print("wrfout.ncl is done")
