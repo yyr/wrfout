@@ -16,15 +16,9 @@ if wo_path not in sys.path:
 my_env=os.environ.copy()
 my_env["NCL_LIB"] = os.path.join(my_env["HOME"], 'nsc/ncl-lib/')
 my_env["WRFOUT"] = wo_path
-
+dir_file = "run_dirs"
 wrf_dom = "3"
 
-
-try:
-    with open('run_dirs') as f:
-        run_dirs = f.read().split()
-except IOError as e:
-    run_dirs=["."]
 
 def set_ncl_fin(env):
     # reg= fnmatch.translate('wrfout*3')
@@ -49,6 +43,12 @@ def run_ncl(dir):
                              stdout=out, stderr=err)
 
 def main():
+    try:
+        with open(dir_file) as f:
+            run_dirs = f.read().split()
+    except IOError as e:
+        run_dirs=["."]
+
     for dir in run_dirs:
         run_ncl(dir)
 
