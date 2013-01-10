@@ -45,8 +45,8 @@ def run_ncl():
         print("No input file is found, Aborting!!")
         sys.exit()
 
-    log_err = log.err
-    log_out = log.out
+    log_err = "log.err"
+    log_out = "log.out"
 
     with open(log_out,"w") as out:
         with open(log_err,"w") as err:
