@@ -45,8 +45,11 @@ def run_ncl():
         print("No input file is found, Aborting!!")
         sys.exit()
 
-    with open("wo.log.out","w") as out:
-        with open("wo.log.err","w") as err:
+    log_err = log.err
+    log_out = log.out
+
+    with open(log_out,"w") as out:
+        with open(log_err,"w") as err:
             print("creating ncl process ...")
             subprocess.Popen("ncl " + wo_path + "/" + ncl_script, env=my_env,
                              shell=True,universal_newlines=True,
