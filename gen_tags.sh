@@ -16,8 +16,8 @@ ctags-exuberant -e -a --verbose=yes  --langdef=ncl \
 ## delete previously generated one.
 rm TAGS
 
+tag_gen "$NCARG_ROOT/lib/ncarg/nclscripts/"
+tag_gen "$NCL_LIB"
 tag_gen .
-tag_gen ~/local/ncl/lib/ncarg/nclscripts/
-tag_gen ~/nsc/ncl-lib/
 
 # gen_tags.sh ends here
