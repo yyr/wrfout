@@ -1,5 +1,4 @@
-; Description:
-;
+load "$WRFOUT/var_list.ncl"
 
 ;_____________________________________________________________________________
 ; procedure: make_animation
@@ -14,5 +13,28 @@ begin
 
   return
 end
+
+;_____________________________________________________________________________
+; procedure: plot2d
+; Doc:
+;
+;_____________________________________________________________________________
+undef("plot2d")
+procedure plot2d(fh:file)
+local plot
+
+begin
+  vars = plot_vars2d()
+  printVarSummary(vars)
+
+  do lv = 0, dim_len0(vars) - 1, 1   ;; list of plot variables
+    var = vars(lv,:)
+    vname = var(0)
+    print(vname)
+    printVarSummary(var)
+  end do
+  return
+end
+
 
 ;;; wo_utils.ncl ends here
