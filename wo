@@ -34,14 +34,9 @@ def set_ncl_fin(env):
             return env
 
 
-def run_ncl(dir):
+def run_ncl():
     ncl_script="wo.ncl"
     global my_env
-    try:
-        os.chdir(dir)
-    except OSError as e:
-        print("Warning: %s" % e + " ..Continuing next anyway")
-        return
 
     print("Entered into: " + os.path.abspath("."))
     my_env = set_ncl_fin(my_env)
@@ -69,9 +64,12 @@ def main():
         run_dirs=["."]
 
     for dir in run_dirs:
-        run_ncl(dir)
+        try:
+            os.chdir(dir)
+            run_ncl()
+        except OSError as e:
+            print("Warning: %s" % e + " ..Continuing next anyway")
 
-    return
 
 if __name__ == '__main__':
     main()
