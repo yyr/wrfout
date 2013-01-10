@@ -16,7 +16,7 @@ if wo_path not in sys.path:
 my_env=os.environ.copy()
 my_env["NCL_LIB"] = os.path.join(my_env["HOME"], 'nsc/ncl-lib/')
 my_env["WRFOUT"] = wo_path
-dir_file = "run_dirs"
+dir_file = "model_wo_dir"
 wrf_dom = "3"
 
 
@@ -25,16 +25,24 @@ def set_ncl_fin(env):
     # print(reg)
     # reobj = re.compile(reg)
     for f in os.listdir('.'):
-        if fnmatch.fnmatch(f, '*d0' + wrf_dom + '*'):
+        if fnmatch.fnmatch(f, 'wrfout*' + 'd0' + wrf_dom + '*'):
+            print("WRF output file is set to: " + f)
             env["NCL_FIN"] = f
+            return env
         else:
             env["NCL_FIN"] = None
+            return env
 
-    return env
 
 def run_ncl(dir):
+    ncl_script="wo.ncl"
     global my_env
-    os.chdir(dir)
+    try:
+        os.chdir(dir)
+    except OSError as e:
+        print("Warning: %s" % e + " ..Continuing next anyway")
+        return
+
     print("Entered into: " + os.path.abspath("."))
     my_env = set_ncl_fin(my_env)
 
@@ -45,11 +53,15 @@ def run_ncl(dir):
     with open("wo.log.out","w") as out:
         with open("wo.log.err","w") as err:
             print("creating ncl process ...")
-            subprocess.Popen("ncl " + wo_path + "/wrfout.ncl", env=my_env,
+            subprocess.Popen("ncl " + wo_path + "/" + ncl_script, env=my_env,
                              shell=True,universal_newlines=True,
                              stdout=out, stderr=err)
 
 def main():
+    global dir_file
+    if len(sys.argv) > 1 and sys.argv[1] == "test":
+        dir_file = "model_wo_dir_test"
+
     try:
         with open(dir_file) as f:
             run_dirs = f.read().split()
