@@ -1,4 +1,4 @@
-load "$WRFOUT/var_list.ncl"
+load "$WRFOUT/plotvars.ncl"
 
 ;_____________________________________________________________________________
 ; procedure: make_animation
