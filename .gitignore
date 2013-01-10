@@ -1,8 +1,14 @@
+# ncl
 *.so
-TAGS
-filedump*
-*.html
 *.ps
 *.png
 *.pdf
 *.ng*
+
+# python
+*.pyc
+
+# other
+TAGS
+filedump*
+*.html
