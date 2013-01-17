@@ -50,12 +50,18 @@ def run_ncl(tests=False):
     log_err = "log.err"
     log_out = "log.out"
 
-    with open(log_out,"w") as out:
-        with open(log_err,"w") as err:
-            print("creating ncl process ...")
-            subprocess.Popen("ncl " + wo_path + "/" + ncl_script, env=my_env,
-                             shell=True,universal_newlines=True,
-                             stdout=out, stderr=err)
+    print("creating ncl process ...")
+    if tests is None:
+        print('came here')
+        with open(log_out,"w") as out:
+            with open(log_err,"w") as err:
+                subprocess.Popen("ncl " + wo_path + "/" + ncl_script, env=my_env,
+                                 shell=True,universal_newlines=True,
+                                 stdout=out, stderr=err)
+
+    else:
+        subprocess.Popen("ncl " + wo_path + "/" + ncl_script, env=my_env,
+                         shell=True, universal_newlines=True)
 
 def main():
     global dir_file
