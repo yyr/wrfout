@@ -34,10 +34,12 @@ def set_ncl_fin(env):
             return env
 
 
-def run_ncl():
+def run_ncl(tests=False):
     ncl_script="wo.ncl"
-    global my_env
+    if tests:
+        ncl_script="tests/test.ncl"
 
+    global my_env
     print("Entered into: " + os.path.abspath("."))
     my_env = set_ncl_fin(my_env)
 
@@ -57,8 +59,7 @@ def run_ncl():
 
 def main():
     global dir_file
-    if len(sys.argv) > 1 and sys.argv[1] == "test":
-        dir_file = "modelout_dir_test"
+    tests = None
 
     try:
         with open(dir_file) as f:
@@ -66,10 +67,14 @@ def main():
     except IOError as e:
         modelout_dir=["."]
 
+    if len(sys.argv) > 1 and sys.argv[1] == "test":
+        dir_file = "modelout_dir_test"
+        tests=True
+
     for dir in modelout_dir:
         try:
             os.chdir(dir)
-            run_ncl()
+            run_ncl(tests)
         except OSError as e:
             print("Warning: %s" % e + " ..Continuing next anyway")
 
