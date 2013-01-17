@@ -21,7 +21,7 @@ procedure make_animation(prefix:string,type:string)
 
 begin
 
-  if (  type = "ps" ) then
+  if (  type .eq. "ps" ) then
     psplit(prefix)
   end if
 
