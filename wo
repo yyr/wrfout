@@ -61,20 +61,21 @@ def main():
     global dir_file
     tests = None
 
+    if len(sys.argv) > 1 and sys.argv[1] == "test":
+        dir_file = "modelout_dir_test"
+        tests=True
+
     try:
         with open(dir_file) as f:
             modelout_dir = f.read().split()
     except IOError as e:
         modelout_dir=["."]
 
-    if len(sys.argv) > 1 and sys.argv[1] == "test":
-        dir_file = "modelout_dir_test"
-        tests=True
 
     for dir in modelout_dir:
         try:
             os.chdir(dir)
-            run_ncl(tests)
+            run_ncl(tests=tests)
         except OSError as e:
             print("Warning: %s" % e + " ..Continuing next anyway")
 
