@@ -1,16 +1,42 @@
 load "$WRFOUT/wo_vars.ncl"
+load "$WRFOUT/wo_plot_utils.ncl"
 
 ;_____________________________________________________________________________
 ; procedure: plot2d
 ; Doc:
 ;_____________________________________________________________________________
 undef("plot2d")
-procedure plot2d(fh:file)
+procedure plot2d(fh:file,type:string)
 local plot
 
 begin
   vars = plot_vars2d()
   printVarSummary(vars)
+
+  lat2d = fh->XLAT(0,:,:)
+  lon2d = fh->XLONG(0,:,:)
+
+  lat2d@units = "degree_north"
+  lon2d@units = "degree_east"
+  nlat = dimsizes(lat2d(:,0))
+  nlon = dimsizes(lon2d(0,:))
+
+  res = True
+  res@gsnMaximize     = True
+  res@gsnSpreadColors = True                 ; use full range of color map
+  res@gsnAddCyclic    = False
+
+  res@tfDoNDCOverlay = True
+  res@mpProjection = "CylindricalEquidistant"
+  res@mpLimitMode = "Corners"
+  res@mpDataBaseVersion = "MediumRes"
+
+  res@mpCenterLonF = fh@CEN_LON
+  res@mpCenterLatF = fh@CEN_LAT
+  res@mpLeftCornerLatF = lat2d(0,0)
+  res@mpLeftCornerLonF = lon2d(0,0)
+  res@mpRightCornerLatF = lat2d(nlat-1,nlon-1)
+  res@mpRightCornerLonF = lon2d(nlat-1,nlon-1)
 
   do lv = 0, dim_len0(vars) - 2, 1   ;; list of plot variables
 
@@ -23,8 +49,7 @@ begin
     vhigh = stringtofloat(var(4))
     vinterval = stringtofloat(var(5))
 
-    draw_plot2d(fh,vname,vprefix,vunits,vlow,vhigh,vinterval)
-
+    draw_plot2d(fh,res,type,vname,vprefix,vunits,vlow,vhigh,vinterval)
 
     print(vname)
     printVarSummary(var)
