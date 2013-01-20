@@ -8,7 +8,7 @@
 
 function tag_gen()
 {
-ctags-exuberant -e -a --verbose=yes  --langdef=ncl \
+ctags -e -a --verbose=yes  --langdef=ncl \
     --langmap=ncl:.ncl --regex-ncl='/^[[:space:]]*function[[:space:]]+([a-zA-Z0-9_]+)[:blank:]*.*/\1/f,function/' \
     --regex-ncl='/^[[:space:]]*procedure[[:space:]]+([a-zA-Z0-9_]+)[:blank:].*/\1/p,procedure/' `find ${1:-"."} -type f -name "*.ncl"`
 }
