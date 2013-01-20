@@ -1,4 +1,4 @@
-load "$WRFOUT/plotvars.ncl"
+load "$WRFOUT/wo_vars.ncl"
 
 ;_____________________________________________________________________________
 ; procedure: plot2d
@@ -24,6 +24,7 @@ begin
     vinterval = stringtofloat(var(5))
 
     draw_plot2d(fh,vname,vprefix,vunits,vlow,vhigh,vinterval)
+
 
     print(vname)
     printVarSummary(var)
