@@ -26,6 +26,7 @@ begin
   ; res@gsnCenterString  = "MSLP      fhr="+nt
 
   res = wrf_map_resources(fh,res)
+  res = set_lb_resources(var(0,:,:),res)
   delete_attrs(res)
 
   if (isatt(res,"woDebug")) then
@@ -34,8 +35,9 @@ begin
   end if
 
   do ti = 0, dim_len0(var) - 1, 1   ;; time loop
+    var_ti = var(ti,:,:)
     print("ti: " + ti)
-    plot = gsn_csm_contour_map(wks,var(ti,:,:),res)
+    plot = gsn_csm_contour_map(wks,var_ti,res)
   end do
   return
 end
