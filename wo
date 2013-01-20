@@ -52,7 +52,6 @@ def run_ncl(tests=False):
 
     print("creating ncl process ...")
     if tests is None:
-        print('came here')
         with open(log_out,"w") as out:
             with open(log_err,"w") as err:
                 subprocess.Popen("ncl " + wo_path + "/" + ncl_script, env=my_env,
