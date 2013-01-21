@@ -30,15 +30,15 @@ begin
   res = set_lb_resources(var(0,:,:),res)
   delete_attrs(res)
 
-  if (isatt(res,"woDebug")) then
+  if (isatt(res,"woDebug") .and. res@woDebug ) then
     printVarSummary(var)
     printVarSummary(res)
   end if
 
   do ti = 0, dim_len0(var) - 1, 1   ;; time loop
     ; res@gsnCenterString  = "MSLP      fhr="+nt
+    print("Working on: " + ti)
     var_ti = var(ti,:,:)
-    print("ti: " + ti)
     plot = gsn_csm_contour_map(wks,var_ti,res)
   end do
   return
