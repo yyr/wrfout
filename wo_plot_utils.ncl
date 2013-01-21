@@ -35,6 +35,7 @@ begin
     printVarSummary(res)
   end if
 
+  wo_delete_att(res)
   do ti = 0, dim_len0(var) - 1, 1   ;; time loop
     ; res@gsnCenterString  = "MSLP      fhr="+nt
     print("Working on: " + ti)
