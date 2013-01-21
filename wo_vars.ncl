@@ -16,7 +16,7 @@ begin
           (/"T2",     "t2",     "Temp at 2m",      "K",  "250", "280",  "1"    /), \
           (/"OLR",    "olr",    "l/w (out)",       "K",  "10",  "300",  "30"   /), \
           (/"SWDOWN", "swdown", "s/w (down)",      "K",  "10",  "300",  "30"  /), \
-          \ ; Below is dummy, Just keep it
+          ; Below field is dummy, Just keep it that way.. \
           (/ "x",      "x",      "x",               "x", "x", "x", "x" /) \
           /)
   return(vars2d)
