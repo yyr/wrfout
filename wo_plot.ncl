@@ -26,16 +26,17 @@ begin
   do lv = 0, dim_len0(vars) - 2, 1   ;; list of plot variables
 
     ; varname, plotname_prefix, unit, low, high, interval
-    var = vars(lv,:)
-    vname = var(0)
-    vprefix = var(1)
-    vltitle= var(2)
-    vunits = var(3)
-    vlow = stringtofloat(var(4))
-    vhigh = stringtofloat(var(5))
-    vinterval = stringtofloat(var(6))
+    var       = vars(lv,:)
+    vname     = var(0)
+    vprefix   = var(1)
+    vltitle   = var(2)
+    vscale    = stringtofloat(var(3))
+    vunits    = var(4)
+    vlow      = stringtofloat(var(5))
+    vhigh     = stringtofloat(var(6))
+    vinterval = stringtofloat(var(7))
 
-    draw_plot2d(fh,res,type,vname,vprefix,vltitle,vunits,vlow,vhigh,vinterval)
+    draw_plot2d(fh,res,type,vname,vprefix,vltitle,vscale,vunits,vlow,vhigh,vinterval)
 
   end do
   return

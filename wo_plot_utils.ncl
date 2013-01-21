@@ -6,8 +6,8 @@ load "$NCARG_ROOT/lib/ncarg/nclscripts/csm/gsn_csm.ncl"
 ;_____________________________________________________________________________
 undef("draw_plot2d")
 procedure draw_plot2d(fh:file,res_in:logical,type:string, \
-        vname:string,vprefix:string,vltitle:string,vunits:string, \
-        vlow:float,vhigh:float,vinterval:float)
+        vname:string,vprefix:string,vltitle:string,vscale:numeric, \
+        vunits:string,vlow:float,vhigh:float,vinterval:float)
 local fh,res_in,type,vname, vprefix,vltitle, vunits, vlow, vhigh, vinterval
 
 begin
@@ -39,6 +39,10 @@ begin
     ; res@gsnCenterString  = "MSLP      fhr="+nt
     print("Working on: " + ti)
     var_ti = var(ti,:,:)
+    if ( vscale .ne. 1 ) then
+      var_ti = var_ti * vscale
+      var_ti@units = vunits
+    end if
     plot = gsn_csm_contour_map(wks,var_ti,res)
   end do
   return
