@@ -1,12 +1,13 @@
-load "$NCL_LIB/yagUtils.ncl"
-load "$WRFOUT/wo_utils.ncl"
-load "$WRFOUT/plotvars.ncl"
+load "$WRFOUT/tests/test_header.ncl"
 
 begin
 
   a = set_inputfile()
-  type = "png"
+  out = "wo_swdown"
+  type = "ps"
+
+  print(out + " " + type )
+  make_animation(out, type)
 
   print("** All tests are done **")
-
 end
