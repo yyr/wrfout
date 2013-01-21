@@ -29,12 +29,13 @@ begin
     var = vars(lv,:)
     vname = var(0)
     vprefix = var(1)
-    vunits =  var(2)
-    vlow = stringtofloat(var(3))
-    vhigh = stringtofloat(var(4))
-    vinterval = stringtofloat(var(5))
+    vltitle= var(2)
+    vunits = var(3)
+    vlow = stringtofloat(var(4))
+    vhigh = stringtofloat(var(5))
+    vinterval = stringtofloat(var(6))
 
-    draw_plot2d(fh,res,type,vname,vprefix,vunits,vlow,vhigh,vinterval)
+    draw_plot2d(fh,res,type,vname,vprefix,vltitle,vunits,vlow,vhigh,vinterval)
 
   end do
   return

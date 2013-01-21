@@ -6,9 +6,9 @@ load "$NCARG_ROOT/lib/ncarg/nclscripts/csm/gsn_csm.ncl"
 ;_____________________________________________________________________________
 undef("draw_plot2d")
 procedure draw_plot2d(fh:file,res_in:logical,type:string, \
-        vname:string,vprefix:string,vunits:string, \
+        vname:string,vprefix:string,vltitle:string,vunits:string, \
         vlow:float,vhigh:float,vinterval:float)
-local fh,res_in,type,vname, vprefix, vunits, vlow, vhigh, vinterval
+local fh,res_in,type,vname, vprefix,vltitle, vunits, vlow, vhigh, vinterval
 
 begin
   print("process: " + vname)
@@ -23,6 +23,7 @@ begin
   res@cnMinLevelValF  = vlow
   res@cnMaxLevelValF  = vhigh
   res@cnLevelSpacingF = vinterval
+  res@gsnLeftString   = vltitle
   res@lbLabelStride   = 3
 
   res = wrf_map_resources(fh,res)
@@ -35,6 +36,7 @@ begin
   end if
 
   do ti = 0, dim_len0(var) - 1, 1   ;; time loop
+    ; res@gsnCenterString  = "MSLP      fhr="+nt
     var_ti = var(ti,:,:)
     print("ti: " + ti)
     plot = gsn_csm_contour_map(wks,var_ti,res)
