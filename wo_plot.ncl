@@ -20,8 +20,11 @@ begin
 
   res@gsnMaximize     = True
   res@gsnSpreadColors = True                 ; use full range of color map
-  res@mpDataBaseVersion = "HighRes"
   res@tfDoNDCOverlay = True
+
+  res@mpDataBaseVersion = "HighRes"
+  res@mpGeophysicalLineColor = "Black"
+  res@mpGeophysicalLineThicknessF = 1.5
 
   do lv = 0, dim_len0(vars) - 2, 1   ;; list of plot variables
 
