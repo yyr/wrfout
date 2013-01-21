@@ -14,16 +14,16 @@ begin
   print("process: " + vname)
 
   var=fh->$vname$
-  wks=gsn_open_wks(type,"wo")
+  out = "wo_" + vprefix
+  wks=gsn_open_wks(type,out)
 
   res = res_in
   res@cnFillOn = True
+  res@cnLevelSelectionMode = "ManualLevels"
   res@cnMinLevelValF  = vlow
   res@cnMaxLevelValF  = vhigh
   res@cnLevelSpacingF = vinterval
-  res@lbLabelStride   = 4
-  res@gsnLeftString   = ""
-  ; res@gsnCenterString  = "MSLP      fhr="+nt
+  res@lbLabelStride   = 3
 
   res = wrf_map_resources(fh,res)
   res = set_lb_resources(var(0,:,:),res)
