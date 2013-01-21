@@ -3,14 +3,13 @@
 ; Doc:
 ;_____________________________________________________________________________
 undef("psplit")
-procedure psplit(fnameRprefix:string)
-local fnameRprefix
+procedure psplit(pref:string)
+local pref
 
 begin
-  system("psplit " + fnameRprefix + "* " + "fnameRprefix")
+  system("psplit " + pref + "* " + pref )
   return
 end
-
 
 ;_____________________________________________________________________________
 ; procedure: make_animation
@@ -22,6 +21,7 @@ procedure make_animation(prefix:string,type:string)
 begin
 
   if (  type .eq. "ps" ) then
+    print("Splitting PostScript File..")
     psplit(prefix)
   end if
 
