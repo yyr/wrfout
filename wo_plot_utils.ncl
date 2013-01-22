@@ -31,7 +31,7 @@ begin
   delete_attrs(res)
 
   if (isatt(res,"woDebug") .and. res@woDebug ) then
-    printVarSummary(var)
+    printVarInfo(var,"Variable Info")
     printVarSummary(res)
   end if
 
