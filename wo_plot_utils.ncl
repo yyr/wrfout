@@ -5,14 +5,15 @@ load "$NCARG_ROOT/lib/ncarg/nclscripts/csm/gsn_csm.ncl"
 ; Doc:
 ;_____________________________________________________________________________
 undef("draw_plot2d")
-procedure draw_plot2d(fh:file,res:logical, \
+procedure draw_plot2d(fh:file,res_in:logical, \
         vname:string,vprefix:string,vltitle:string,vscale:numeric, \
         vunits:string,vlow:float,vhigh:float,vinterval:float)
-local fh,res,type,vname, vprefix,vltitle, vunits, vlow, vhigh, vinterval
+local fh,res_in,type,vname, vprefix,vltitle, vunits, vlow, vhigh, vinterval
 
 
 begin
   print("process: " + vname)
+  res = res_in
 
   var=fh->$vname$
   times = fh->Times
