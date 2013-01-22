@@ -2,12 +2,12 @@
 
 * TODO 2d
 - [ ] wind, geopotential height at 1000, 500, 200
-- [ ] sea ice cover
+- [X] sea ice cover
 - [ ] surface temperature
 - [ ] skin temperature
 - [ ] precipitation
 - [ ] accumulated precipitation
-- [ ] snow cover
+- [X] snow cover
 - [ ] weight vars (cloud, snow, water vapor)
 
 * TODO Variable diurnal cycles.
