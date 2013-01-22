@@ -4,10 +4,15 @@ load "$WRFOUT/wo_plot.ncl"
 
 begin
   fin = set_inputfile()
-  type = "ps"
+  res = True
+
+  ; wo resources
+  res@woGraphicType = "ps"
+  res@woDebug = False
+
   out_prefix="wo_"
 
-  plot2d(fin,type)
+  plot2d(fin,res)
 
   print("** Wrfout is done its job **")
 end

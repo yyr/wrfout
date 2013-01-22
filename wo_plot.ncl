@@ -6,15 +6,9 @@ load "$WRFOUT/wo_plot_utils.ncl"
 ; Doc:
 ;_____________________________________________________________________________
 undef("plot2d")
-procedure plot2d(fh:file,type:string)
-local plot
+procedure plot2d(fh:file,res:logical)
 
 begin
-  res = True
-
-  ; wo resources
-  res@woDebug = False
-
   print("2d Plotting Started..")
   vars = plot_vars2d()
 
@@ -39,7 +33,7 @@ begin
     vhigh     = stringtofloat(var(6))
     vinterval = stringtofloat(var(7))
 
-    draw_plot2d(fh,res,type,vname,vprefix,vltitle,vscale,vunits,vlow,vhigh,vinterval)
+    draw_plot2d(fh,res,vname,vprefix,vltitle,vscale,vunits,vlow,vhigh,vinterval)
 
   end do
   return

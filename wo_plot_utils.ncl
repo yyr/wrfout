@@ -5,19 +5,19 @@ load "$NCARG_ROOT/lib/ncarg/nclscripts/csm/gsn_csm.ncl"
 ; Doc:
 ;_____________________________________________________________________________
 undef("draw_plot2d")
-procedure draw_plot2d(fh:file,res_in:logical,type:string, \
+procedure draw_plot2d(fh:file,res:logical, \
         vname:string,vprefix:string,vltitle:string,vscale:numeric, \
         vunits:string,vlow:float,vhigh:float,vinterval:float)
-local fh,res_in,type,vname, vprefix,vltitle, vunits, vlow, vhigh, vinterval
+local fh,res,type,vname, vprefix,vltitle, vunits, vlow, vhigh, vinterval
+
 
 begin
   print("process: " + vname)
 
   var=fh->$vname$
   out = "wo_" + vprefix
-  wks=gsn_open_wks(type,out)
+  wks=gsn_open_wks(res@woGraphicType,out)
 
-  res = res_in
   res@cnFillOn = True
   res@cnLevelSelectionMode = "ManualLevels"
   res@cnMinLevelValF  = vlow
