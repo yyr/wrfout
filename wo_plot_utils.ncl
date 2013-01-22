@@ -15,6 +15,8 @@ begin
   print("process: " + vname)
 
   var=fh->$vname$
+  times = fh->Times
+
   out = res@woGraphicPrefix + vprefix
   wks=gsn_open_wks(res@woGraphicType,out)
 
@@ -45,6 +47,11 @@ begin
       var_ti = var_ti * vscale
       var_ti@units = vunits
     end if
+
+    ; date
+    date_string = chartostring(times(ti,5:15))
+    res@gsnCenterString = date_string
+
     plot = gsn_csm_contour_map(wks,var_ti,res)
   end do
   return
