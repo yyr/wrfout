@@ -29,6 +29,7 @@ begin
   res = wrf_map_resources(fh,res)
   res = set_lb_resources(var(0,:,:),res)
   delete_attrs(res)
+  res@lbTitleOn = False
 
   if (isatt(res,"woDebug") .and. res@woDebug ) then
     printVarInfo(var,"Variable Info")
