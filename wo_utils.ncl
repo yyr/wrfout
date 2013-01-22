@@ -38,7 +38,10 @@ undef("wo_delete_att")
 procedure wo_delete_att(res_in:logical)
 
 begin
-  wo_att_list = (/ "woDebug", "woGraphicType", "woXxx" /)
+  wo_att_list = (/ "woDebug", \
+          "woGraphicType", \
+          "woGraphicPrefix", \
+          "woXxx" /)
 
   do at = 0, dim_len0(wo_att_list) - 1 , 1   ;; att
     if (isatt(res_in,wo_att_list(at)) ) then

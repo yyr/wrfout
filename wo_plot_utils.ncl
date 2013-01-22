@@ -15,7 +15,7 @@ begin
   print("process: " + vname)
 
   var=fh->$vname$
-  out = "wo_" + vprefix
+  out = res@woGraphicPrefix + vprefix
   wks=gsn_open_wks(res@woGraphicType,out)
 
   res@cnFillOn = True

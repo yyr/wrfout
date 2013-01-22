@@ -9,8 +9,7 @@ begin
   ; wo resources
   res@woGraphicType = "ps"
   res@woDebug = False
-
-  out_prefix="wo_"
+  res@woGraphicPrefix = "wo_"
 
   plot2d(fin,res)
 
