@@ -1,11 +1,11 @@
 ; Created: Monday, January  7 2013
 
 ;_____________________________________________________________________________
-; Function: plot_vars2d
+; Function: plot2d_vars
 ; Doc:
 ;_____________________________________________________________________________
-undef("plot_vars2d")
-function plot_vars2d()
+undef("plot2d_vars")
+function plot2d_vars()
 local vars2d
 
 begin

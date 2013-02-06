@@ -3,14 +3,15 @@ load "$WRFOUT/wo_plot_utils.ncl"
 
 ;_____________________________________________________________________________
 ; procedure: plot2d
-; Doc:
+; Doc: loop over time and plot all given two dimensional variables with.
+;      Varable information is defined by `plot2d_vars' function.
 ;_____________________________________________________________________________
 undef("plot2d")
 procedure plot2d(fh:file,res:logical)
 
 begin
   print("2d Plotting Started..")
-  vars = plot_vars2d()
+  vars = plot2d_vars()
 
   res@gsnMaximize     = True
   res@gsnSpreadColors = True                 ; use full range of color map
