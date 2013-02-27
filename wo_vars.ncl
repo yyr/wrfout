@@ -35,4 +35,20 @@ begin
   return(vars2d)
 end
 
+undef("plot3d_vars")
+function plot3d_vars()
+local vars3d
+
+begin
+  vars3d = (/ \
+          \ ; varname, plotname_prefix, title,         scale,  unit,   low,   high,   interval, color scheme(?)
+          (/"HGT",      "hgt",       "Terrain Height", "1",    "m",    "0",   "2000", "100"  /), \
+          ; Below field is dummy, Just keep it that way.. \
+          (/ "x",      "x",      "x",              "x",   "x",    "x",   "x",    "x"    /)  \
+          /)
+  return(vars3d)
+end
+
+
+
 ;;; plotvars.ncl ends here
