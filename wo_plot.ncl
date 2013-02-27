@@ -46,10 +46,9 @@ end
 ;_____________________________________________________________________________
 undef("plot3d")
 procedure plot3d(fh:file,res:logical)
-local
 
 begin
-    print("3d Plotting Started..")
+  print("3d Plotting Started..")
   vars = plot3d_vars()
 
   res@gsnMaximize     = True
