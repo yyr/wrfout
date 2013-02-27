@@ -40,4 +40,43 @@ begin
   return
 end
 
+;_____________________________________________________________________________
+; procedure: plot3d
+; Doc:
+;_____________________________________________________________________________
+undef("plot3d")
+procedure plot3d(fh:file,res:logical)
+local
+
+begin
+    print("3d Plotting Started..")
+  vars = plot3d_vars()
+
+  res@gsnMaximize     = True
+  res@gsnSpreadColors = True                 ; use full range of color map
+  res@tfDoNDCOverlay = True
+
+  res@mpDataBaseVersion = "HighRes"
+  res@mpGeophysicalLineColor = "Black"
+  res@mpGeophysicalLineThicknessF = 1.5
+
+  do lv = 0, dim_len0(vars) - 2, 1   ;; list of plot variables
+
+    ; varname, plotname_prefix, unit, low, high, interval
+    var       = vars(lv,:)
+    vname     = var(0)
+    vprefix   = var(1)
+    vltitle   = var(2)
+    vscale    = stringtofloat(var(3))
+    vunits    = var(4)
+    vlow      = stringtofloat(var(5))
+    vhigh     = stringtofloat(var(6))
+    vinterval = stringtofloat(var(7))
+
+    draw_plot2d(fh,res,vname,vprefix,vltitle,vscale,vunits,vlow,vhigh,vinterval)
+
+  end do
+  return
+end
+
 ;;; wo_utils.ncl ends here
