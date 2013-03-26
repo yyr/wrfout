@@ -1,6 +1,16 @@
 #!/usr/bin/env python
+# [[[cog import cog; cog.out('"""\n{0}\n"""'.format(file('./README.rst').read()))]]]
 """
-WO is top level invoke script to run WRFOUT.
+WRFOUT
+======
+Common visualizations for WRF model output.
+
+License
+-------
+GPL v3 (or later)
+
+"""
+# [[[end]]]
 
 Copyright (C) 2013 Yagnesh Raghava Yakkala.
 Author: Yagnesh Raghava Yakkala <hi at yagnesh dot org>

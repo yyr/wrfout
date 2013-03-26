@@ -1,2 +1,7 @@
-Common visualizations for WRF model output. Intended to be run right after
-model execution is finished.
+WRFOUT
+======
+Common visualizations for WRF model output.
+
+License
+-------
+GPL v3 (or later)
