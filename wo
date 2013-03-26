@@ -82,27 +82,38 @@ def run_ncl(tests=False):
         subprocess.Popen("ncl " + wo_path + "/" + ncl_script, env=my_env,
                          shell=True, universal_newlines=True)
 
-def main():
-    global dir_file
-    tests = None
 
-    if len(sys.argv) > 1 and sys.argv[1] == "test":
-        dir_file = "modelout_dir_test"
-        tests=True
-
+def arg_parse(directory, script, log, domain):
     try:
-        with open(dir_file) as f:
-            modelout_dir = f.read().split()
+        with open(directory) as f:
+            dirs = f.read().split()
     except IOError as e:
         modelout_dir=["."]
 
-
-    for dir in modelout_dir:
+    for dir in dirs:
         try:
             os.chdir(dir)
             run_ncl(tests=tests)
         except OSError as e:
             print("Warning: %s" % e + " ..Continuing next anyway")
+
+
+def main(args=None):
+    import argparse
+    parser = argparse.ArgumentParser(
+        formatter_class=argparse.RawTextHelpFormatter,
+        description=__doc__)
+    parser.add_argument('--directory', '-d',
+                        default=[os.path.abspath('.')], nargs='*',
+                        help='directories in which wrfout is to be run.')
+    parser.add_argument('-s', '--script', default='wo.ncl',
+                        help='Script to run')
+    parser.add_argument('--log', help='save log to file', default='log.wo')
+    parser.add_argument('--domain', type=int, default=3,
+                        help='Domain number eg: { 1, 2, 3}.')
+
+    arg_parse(**vars(parser.parse_args(args)))
+
 
 
 if __name__ == '__main__':
