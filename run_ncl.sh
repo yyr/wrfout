@@ -9,6 +9,6 @@ for dir in `cat ./modelout_dir`; do
 
     export NCL_FIN=$file
     echo ncl_fin: $NCL_FIN
-    $@                          # eg ./run_ncl.sh ncl foo.ncl
+    ncl $@                          # eg ./run_ncl.sh foo.ncl
 
 done
