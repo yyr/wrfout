@@ -16,3 +16,5 @@ filedump*
 
 # custom
 model*
+
+backup/*
