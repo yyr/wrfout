@@ -54,7 +54,7 @@ def set_ncl_fin(env):
             return env
 
 
-def run_ncl(script= wo_path + "/" + 'wo.ncl',tests=False):
+def run_ncl(script= wo_path + "/" + 'wo.ncl',tests=False,run_foreground=False):
     if tests:
         script= wo_path + "/" + "tests/test.ncl"
 
@@ -70,19 +70,19 @@ def run_ncl(script= wo_path + "/" + 'wo.ncl',tests=False):
     log_out = "log.out"
 
     print("creating ncl process ...")
-    if tests is None:
+    if run_foreground:
+        subprocess.Popen("ncl " + script, env=my_env,
+                         shell=True, universal_newlines=True)
+
+    else:
         with open(log_out,"w") as out:
             with open(log_err,"w") as err:
                 subprocess.Popen("ncl " + script , env=my_env,
                                  shell=True,universal_newlines=True,
                                  stdout=out, stderr=err)
 
-    else:
-        subprocess.Popen("ncl " + script, env=my_env,
-                         shell=True, universal_newlines=True)
 
-
-def arg_parse(directories, script, log, domain,run_tests):
+def arg_parse(directories, script, log, domain,run_tests,run_foreground):
     if len(directories) == 1 and directories[0] is '.':
         dirs = [os.path.abspath('.')]
         if os.path.exists(dir_file):
@@ -92,7 +92,7 @@ def arg_parse(directories, script, log, domain,run_tests):
     for dir in dirs:
         try:
             os.chdir(dir)
-            run_ncl(script=script,tests=run_tests)
+            run_ncl(script=script,tests=run_tests,run_foreground=run_foreground)
         except OSError as e:
             print("Warning: %s" % e + " ..Continuing next anyway")
 
@@ -110,7 +110,10 @@ def main(args=None):
     parser.add_argument('--log', help='save log to file', default='log.wo')
     parser.add_argument('--domain', type=int, default=3,
                         help='Domain number eg: { 1, 2, 3}.')
-    parser.add_argument('--run-tests',action="store_true")
+    parser.add_argument('--run-tests',action="store_true",
+                        help='Run tests')
+    parser.add_argument('-fg','--run-foreground',action="store_true",
+                        help='set this to run ncl process to run in foreground')
 
     arg_parse(**vars(parser.parse_args(args)))
 
