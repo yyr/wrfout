@@ -54,10 +54,7 @@ def set_ncl_fin(env):
             return env
 
 
-def run_ncl(script= wo_path + "/" + 'wo.ncl',tests=False,run_foreground=False):
-    if tests:
-        script= wo_path + "/" + "tests/test.ncl"
-
+def run_ncl(script= wo_path + "/" + 'wo.ncl',log_file='log',run_foreground=False):
     global my_env
     print("Entered into: " + os.path.abspath("."))
     my_env = set_ncl_fin(my_env)
@@ -66,8 +63,8 @@ def run_ncl(script= wo_path + "/" + 'wo.ncl',tests=False,run_foreground=False):
         print("No input file is found, Aborting!!")
         sys.exit()
 
-    log_err = "log.err"
-    log_out = "log.out"
+    log_err = log_file + ".err"
+    log_out = log_file + ".out"
 
     print("creating ncl process ...")
     if run_foreground:
@@ -82,7 +79,10 @@ def run_ncl(script= wo_path + "/" + 'wo.ncl',tests=False,run_foreground=False):
                                  stdout=out, stderr=err)
 
 
-def arg_parse(directories, script, log, domain,run_tests,run_foreground):
+def arg_parse(directories, script, log_file_name, domain,run_tests,run_foreground):
+    if run_tests:
+        script= wo_path + "/" + "tests/test.ncl"
+
     if len(directories) == 1 and directories[0] is '.':
         dirs = [os.path.abspath('.')]
         if os.path.exists(dir_file):
@@ -92,7 +92,7 @@ def arg_parse(directories, script, log, domain,run_tests,run_foreground):
     for dir in dirs:
         try:
             os.chdir(dir)
-            run_ncl(script=script,tests=run_tests,run_foreground=run_foreground)
+            run_ncl(script=script,log_file=log_file_name,run_foreground=run_foreground)
         except OSError as e:
             print("Warning: %s" % e + " ..Continuing next anyway")
 
@@ -107,7 +107,8 @@ def main(args=None):
                         help='directories in which wrfout is to be run.')
     parser.add_argument('-s', '--script', default='wo.ncl',
                         help='custom ncl script name to run instead of <wo.ncl>')
-    parser.add_argument('--log', help='save log to file', default='log.wo')
+    parser.add_argument('-l','--log-file-name',
+                        help='save log to file', default='log.wo')
     parser.add_argument('--domain', type=int, default=3,
                         help='Domain number eg: { 1, 2, 3}.')
     parser.add_argument('--run-tests',action="store_true",
