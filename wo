@@ -83,17 +83,17 @@ def run_ncl(tests=False):
                          shell=True, universal_newlines=True)
 
 
-def arg_parse(directory, script, log, domain):
-    try:
-        with open(directory) as f:
-            dirs = f.read().split()
-    except IOError as e:
-        modelout_dir=["."]
+def arg_parse(directories, script, log, domain,run_tests):
+    if len(directories) == 1 and directories[0] is '.':
+        dirs = [os.path.abspath('.')]
+        if os.path.exists(dir_file):
+            with open(dir_file) as f:
+                dirs = f.read().split()
 
     for dir in dirs:
         try:
             os.chdir(dir)
-            run_ncl(tests=tests)
+            run_ncl(tests=run_tests)
         except OSError as e:
             print("Warning: %s" % e + " ..Continuing next anyway")
 
@@ -103,14 +103,16 @@ def main(args=None):
     parser = argparse.ArgumentParser(
         formatter_class=argparse.RawTextHelpFormatter,
         description=__doc__)
-    parser.add_argument('--directory', '-d',
-                        default=[os.path.abspath('.')], nargs='*',
+    parser.add_argument('--directories', '-d',
+                        default='.', nargs='*',
                         help='directories in which wrfout is to be run.')
     parser.add_argument('-s', '--script', default='wo.ncl',
                         help='Script to run')
     parser.add_argument('--log', help='save log to file', default='log.wo')
     parser.add_argument('--domain', type=int, default=3,
                         help='Domain number eg: { 1, 2, 3}.')
+    parser.add_argument('--run-tests',action="store_true")
+
 
     arg_parse(**vars(parser.parse_args(args)))
 
