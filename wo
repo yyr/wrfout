@@ -54,10 +54,9 @@ def set_ncl_fin(env):
             return env
 
 
-def run_ncl(tests=False):
-    ncl_script="wo.ncl"
+def run_ncl(script= wo_path + "/" + 'wo.ncl',tests=False):
     if tests:
-        ncl_script="tests/test.ncl"
+        script= wo_path + "/" + "tests/test.ncl"
 
     global my_env
     print("Entered into: " + os.path.abspath("."))
@@ -74,12 +73,12 @@ def run_ncl(tests=False):
     if tests is None:
         with open(log_out,"w") as out:
             with open(log_err,"w") as err:
-                subprocess.Popen("ncl " + wo_path + "/" + ncl_script, env=my_env,
+                subprocess.Popen("ncl " + script , env=my_env,
                                  shell=True,universal_newlines=True,
                                  stdout=out, stderr=err)
 
     else:
-        subprocess.Popen("ncl " + wo_path + "/" + ncl_script, env=my_env,
+        subprocess.Popen("ncl " + script, env=my_env,
                          shell=True, universal_newlines=True)
 
 
@@ -93,7 +92,7 @@ def arg_parse(directories, script, log, domain,run_tests):
     for dir in dirs:
         try:
             os.chdir(dir)
-            run_ncl(tests=run_tests)
+            run_ncl(script=script,tests=run_tests)
         except OSError as e:
             print("Warning: %s" % e + " ..Continuing next anyway")
 
@@ -107,16 +106,13 @@ def main(args=None):
                         default='.', nargs='*',
                         help='directories in which wrfout is to be run.')
     parser.add_argument('-s', '--script', default='wo.ncl',
-                        help='Script to run')
+                        help='custom ncl script name to run instead of <wo.ncl>')
     parser.add_argument('--log', help='save log to file', default='log.wo')
     parser.add_argument('--domain', type=int, default=3,
                         help='Domain number eg: { 1, 2, 3}.')
     parser.add_argument('--run-tests',action="store_true")
 
-
     arg_parse(**vars(parser.parse_args(args)))
-
-
 
 if __name__ == '__main__':
     main()
