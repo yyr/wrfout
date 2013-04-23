@@ -26,7 +26,7 @@ begin
   end if
 
   system("convert -verbose -delay 41 -loop 0 -density 50 " \
-          + prefix +"*"+ type + " " + prefix + ".gif")
+         + prefix +"*"+ type + " " + prefix + ".gif")
   return
 end
 
@@ -38,10 +38,10 @@ undef("wo_delete_att")
 procedure wo_delete_att(res_in:logical)
 
 begin
-  wo_att_list = (/ "woDebug", \
-          "woGraphicType", \
-          "woGraphicPrefix", \
-          "woXxx" /)
+  wo_att_list = (/ "woDebug",        \
+                  "woGraphicType",   \
+                  "woGraphicPrefix", \
+                  "woXxx" /)
 
   do at = 0, dim_len0(wo_att_list) - 1 , 1   ;; att
     if (isatt(res_in,wo_att_list(at)) ) then

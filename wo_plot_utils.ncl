@@ -7,8 +7,8 @@ load "$NCARG_ROOT/lib/ncarg/nclscripts/csm/shea_util.ncl"
 ;_____________________________________________________________________________
 undef("draw_plot2d")
 procedure draw_plot2d(fh:file,res_in:logical, \
-        vname:string,vprefix:string,vltitle:string,vscale:numeric, \
-        vunits:string,vlow:float,vhigh:float,vinterval:float)
+                      vname:string,vprefix:string,vltitle:string,vscale:numeric, \
+                      vunits:string,vlow:float,vhigh:float,vinterval:float)
 local fh,res_in,type,vname, vprefix,vltitle, vunits, vlow, vhigh, vinterval
 
 
