@@ -32,7 +32,8 @@ if wo_path not in sys.path:
     sys.path.insert(0, wo_path)
 
 def arg_parse(directories):
-    print(directories)
+    in_file = wrfout.util.find_inputfile()
+    print(in_file)
 
 def main(args=None):
     import argparse
