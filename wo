@@ -37,10 +37,10 @@ def arg_parse(plot2d,log_file=None,in_file=None,log=None,log_level=None):
     formatter = logging.Formatter(LOG_FORMAT)
 
     ch = logging.StreamHandler()
-    ch.setLevel(logging.INFO)
     ch.setFormatter(formatter)
     lgr = logging.getLogger('wrfout')
     lgr.addHandler(ch)
+    lgr.setLevel('INFO')
 
     if log_level:
         lgr.setLevel(log_level)
