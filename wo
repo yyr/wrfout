@@ -21,16 +21,19 @@ WEBSITE = "http://github.com/yyr/wrfout"
 LICENSE ="GPL v3 or later"
 
 import os
-import sys
 import inspect
-import wrfout
-import logging
+import sys
 
+# update PYTHONPATH
 wo_path = os.path.abspath(os.path.split(inspect.getfile(
     inspect.currentframe()))[0])
-
 if wo_path not in sys.path:
     sys.path.insert(0, wo_path)
+
+
+import logging
+import wrfout
+
 
 def arg_parse(plot2d,log_file=None,in_file=None,log=None,log_level=None):
     LOG_FORMAT = '%(levelname)-8s: %(message)s'
@@ -59,7 +62,10 @@ def arg_parse(plot2d,log_file=None,in_file=None,log=None,log_level=None):
         if not in_file:
             lgr.error('No wrfout file found, exiting.')
             sys.exit(1)
-        lgr.info('set "%s" as input file' %in_file)
+        lgr.info('set "%s" as input file' % in_file)
+
+    wrfout.plot_vars(in_file)   # plot variables.
+
 
 def main(args=None):
     import argparse
