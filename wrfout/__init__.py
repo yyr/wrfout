@@ -1,8 +1,10 @@
+#!/usr/bin/env python
 """
 WRFOUT module
 """
-from . import util
-from . import conf
+
+import util
+import conf
 import logging
 import Nio
 
