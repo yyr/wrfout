@@ -5,20 +5,12 @@ WRFOUT module
 
 from . import util
 from .conf import config
+from .plot import plot_vars
 
 import conf
 import logging
-import Nio
 
 __all__ = [ 'util','conf']
-
-def plot_vars(filename):
-    fh = Nio.open_file(filename,mode="r",format='nc')
-    var_groups = util.var_grouped(fh)
-    for k in var_groups.keys():
-        print(k+": ")
-        for v in var_groups[k]:
-            print(v)
 
 def arg_parse(plot2d,log_file=None,in_file=None,log=None,log_level=None):
     LOG_FORMAT = '%(levelname)-8s: %(message)s'
