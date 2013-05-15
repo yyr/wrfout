@@ -3,7 +3,9 @@
 WRFOUT module
 """
 
-import util
+from . import util
+from .conf import config
+
 import conf
 import logging
 import Nio
