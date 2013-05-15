@@ -47,5 +47,10 @@ def var_grouped(fh,by_type="dimension"):
                 f_d.append(var)
     return {'1d' : o_d, '2d' : t_d, '3d' : th_d, '4d' : f_d}
 
+def rankof(var,fh=None,filevar=True):
+    if filevar and fh is not None:
+        return fh.variables[var].rank
+    return None
+
 if __name__ == '__main__':
     pass
