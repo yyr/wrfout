@@ -4,10 +4,7 @@ WRFOUT module
 """
 
 from . import util
-from .conf import config
 from .plot import _get_logger, _plot_vars
-
-import conf
 
 __all__ = [ 'util','conf', 'plot']
 
