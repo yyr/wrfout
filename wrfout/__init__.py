@@ -5,23 +5,14 @@ WRFOUT module
 
 from . import util
 from .conf import config
-from .plot import plot_vars
+from .plot import _get_logger, _plot_vars
 
 import conf
-import logging
 
-__all__ = [ 'util','conf']
+__all__ = [ 'util','conf', 'plot']
 
 def arg_parse(plot2d,log_file=None,in_file=None,log=None,log_level=None):
-    LOG_FORMAT = '%(levelname)-8s: %(message)s'
-    formatter = logging.Formatter(LOG_FORMAT)
-
-    ch = logging.StreamHandler()
-    ch.setFormatter(formatter)
-    lgr = logging.getLogger('wrfout')
-    lgr.addHandler(ch)
-    lgr.setLevel('INFO')
-
+    lgr = _get_logger()
     if log_level:
         lgr.setLevel(log_level)
 
@@ -31,6 +22,7 @@ def arg_parse(plot2d,log_file=None,in_file=None,log=None,log_level=None):
         if log_level:
             log_level = getattr(logging, log_level.upper())
             handler.setLevel(log_level)
+
         lgr.addHandler(handler)
 
     if not in_file:
@@ -39,9 +31,10 @@ def arg_parse(plot2d,log_file=None,in_file=None,log=None,log_level=None):
         if not in_file:
             lgr.error('No wrfout file found, exiting.')
             sys.exit(1)
-        lgr.info('set "%s" as input file' % in_file)
 
-    plot_vars(in_file)   # plot variables.
+        lgr.warn('considering "%s" as input file' % in_file)
+
+    _plot_vars(in_file)   # plot variables.
 
 
 def main(args=None):
@@ -55,8 +48,8 @@ def main(args=None):
     parser.add_argument('-l','--log', action='store_true',help='Log wrfout actions.')
     parser.add_argument('--log-file', help='save wrfout logs to this file.')
     parser.add_argument('--log-level',
-        choices=['CRITICAL', 'ERROR', 'WARN', 'INFO', 'DEBUG'],
-        help='logging level for log file.')
+                        choices=['CRITICAL', 'ERROR', 'WARN', 'INFO', 'DEBUG'],
+                        help='logging level for log file.')
 
     parser.add_argument('plot2d',action='store_true', help='plot 2d variables.')
 
