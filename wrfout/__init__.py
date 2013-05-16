@@ -5,15 +5,17 @@ WRFOUT module
 
 from .util import _get_logger, find_inputfile
 from .plot import _plot_vars
+import sys
 
-__all__ = [ 'util','conf', 'plot']
 
-def arg_parse(plot2d,log_file=None,in_file=None,log=None,log_level=None):
+def arg_parse(plot2d, log_file=None, in_file=None, log=None, log_level=None):
+    """Parse arguments."""
     lgr = _get_logger()
     if log_level:
         lgr.setLevel(log_level)
 
     if log_file:
+        import logging
         handler = logging.FileHandler(filename=log_file, mode='w')
         handler.setFormatter(logging.Formatter(logging.BASIC_FORMAT))
         if log_level:
@@ -35,20 +37,23 @@ def arg_parse(plot2d,log_file=None,in_file=None,log=None,log_level=None):
 
 
 def main(args=None):
+    """Set arguments."""
     import argparse
     parser = argparse.ArgumentParser(
         formatter_class=argparse.RawTextHelpFormatter,
         description=__doc__)
-    parser.add_argument('--in-file',default=None,
+    parser.add_argument('--in-file', default=None,
                         help='directories in which wrfout is to be run.')
 
-    parser.add_argument('-l','--log', action='store_true',help='Log wrfout actions.')
+    parser.add_argument('-l', '--log', action='store_true',
+                        help='Log wrfout actions.')
     parser.add_argument('--log-file', help='save wrfout logs to this file.')
     parser.add_argument('--log-level',
                         choices=['CRITICAL', 'ERROR', 'WARN', 'INFO', 'DEBUG'],
                         help='logging level for log file.')
 
-    parser.add_argument('plot2d',action='store_true', help='plot 2d variables.')
+    parser.add_argument('plot2d', action='store_true',
+                        help='plot 2d variables.')
 
     arg_parse(**vars(parser.parse_args(args)))
 

@@ -5,7 +5,7 @@
 Configuration data for plots.
 '''
 
-from .py3compat import *
+from .py3compat import utf8
 import ConfigParser
 import io
 
@@ -157,8 +157,9 @@ units =
 scale =
 """)
 
+
 class ConfParser(ConfigParser.RawConfigParser):
-    def read_string(self,string):
+    def read_string(self, string):
         s = io.StringIO(string)
         return self.readfp(s)
 
@@ -173,12 +174,12 @@ class varConf(object):
     def __init__(self):
         self.known_vars = []
 
-    def _var_conf(self,varname):
+    def _var_conf(self, varname):
         pass
 
-    def var_conf(self,varname):
+    def var_conf(self, varname):
         if varname in self.known_vars:
-            return _var_conf(varname)
+            return self._var_conf(varname)
         else:
             return None
 
