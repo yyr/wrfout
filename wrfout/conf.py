@@ -159,18 +159,19 @@ scale =
 
 
 class ConfParser(ConfigParser.RawConfigParser):
+    """Wrapper to ConfigParser"""
     def read_string(self, string):
+        """Later versions of ConfigParser has this feature."""
         s = io.StringIO(string)
         return self.readfp(s)
+
 
 config = ConfParser()
 config.read_string(default_config)
 
 
-# vars to be plotted.
-class varConf(object):
-    """Variable configuration
-    """
+class VarConf(object):
+    """Variable configuration. unused."""
     def __init__(self):
         self.known_vars = []
 
@@ -182,6 +183,7 @@ class varConf(object):
             return self._var_conf(varname)
         else:
             return None
+
 
 if __name__ == '__main__':
     pass
