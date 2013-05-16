@@ -3,8 +3,8 @@
 WRFOUT module
 """
 
-from . import util
-from .plot import _get_logger, _plot_vars
+from .util import _get_logger, find_inputfile
+from .plot import _plot_vars
 
 __all__ = [ 'util','conf', 'plot']
 
@@ -24,7 +24,7 @@ def arg_parse(plot2d,log_file=None,in_file=None,log=None,log_level=None):
 
     if not in_file:
         lgr.warn('No input file is specified, searching the directory.')
-        in_file = util.find_inputfile()
+        in_file = find_inputfile()
         if not in_file:
             lgr.error('No wrfout file found, exiting.')
             sys.exit(1)
