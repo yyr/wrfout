@@ -18,105 +18,18 @@ WO is top level invoke script to run WRFOUT.
 
 AUTHOR = "Yagnesh Raghava Yakkala"
 WEBSITE = "http://github.com/yyr/wrfout"
-LICENSE ="GPL v3 or later"
+LICENSE = "GPL v3 or later"
 
 import os
-import sys
-import subprocess
-import fnmatch
-import re
 import inspect
+import sys
 
+# update PYTHONPATH
 wo_path = os.path.abspath(os.path.split(inspect.getfile(
     inspect.currentframe()))[0])
-
 if wo_path not in sys.path:
     sys.path.insert(0, wo_path)
 
-my_env=os.environ.copy()
-my_env["NCL_LIB"] = os.path.join(my_env["HOME"], 'nsc/ncl-lib/')
-my_env["WRFOUT"] = wo_path
-dir_file = "modelout_dir"
-wrf_dom = "3"
-
-
-def set_ncl_fin(env):
-    # reg= fnmatch.translate('wrfout*3')
-    # print(reg)
-    # reobj = re.compile(reg)
-    for f in os.listdir('.'):
-        if fnmatch.fnmatch(f, 'wrfout*' + 'd0' + wrf_dom + '*'):
-            print("WRF output file is set to: " + f)
-            env["NCL_FIN"] = f
-            return env
-        else:
-            env["NCL_FIN"] = None
-            return env
-
-
-def run_ncl(script= wo_path + "/" + 'wo.ncl',log_file='log',run_foreground=False):
-    global my_env
-    print("Entered into: " + os.path.abspath("."))
-    my_env = set_ncl_fin(my_env)
-
-    if my_env['NCL_FIN'] is None:
-        print("No input file is found, Aborting!!")
-        sys.exit()
-
-    log_err = log_file + ".err"
-    log_out = log_file + ".out"
-
-    print("creating ncl process ...")
-    if run_foreground:
-        subprocess.Popen("ncl " + script, env=my_env,
-                         shell=True, universal_newlines=True)
-
-    else:
-        with open(log_out,"w") as out:
-            with open(log_err,"w") as err:
-                subprocess.Popen("ncl " + script , env=my_env,
-                                 shell=True,universal_newlines=True,
-                                 stdout=out, stderr=err)
-
-
-def arg_parse(directories, script, log_file_name, domain,run_tests,run_foreground):
-    if run_tests:
-        script= wo_path + "/" + "tests/test.ncl"
-
-    if len(directories) == 1 and directories[0] is '.':
-        dirs = [os.path.abspath('.')]
-        if os.path.exists(dir_file):
-            with open(dir_file) as f:
-                dirs = f.read().split()
-
-    for dir in dirs:
-        try:
-            os.chdir(dir)
-            run_ncl(script=script,log_file=log_file_name,run_foreground=run_foreground)
-        except OSError as e:
-            print("Warning: %s" % e + " ..Continuing next anyway")
-
-
-def main(args=None):
-    import argparse
-    parser = argparse.ArgumentParser(
-        formatter_class=argparse.RawTextHelpFormatter,
-        description=__doc__)
-    parser.add_argument('--directories', '-d',
-                        default='.', nargs='*',
-                        help='directories in which wrfout is to be run.')
-    parser.add_argument('-s', '--script', default='wo.ncl',
-                        help='custom ncl script name to run instead of <wo.ncl>')
-    parser.add_argument('-l','--log-file-name',
-                        help='save log to file', default='log.wo')
-    parser.add_argument('--domain', type=int, default=3,
-                        help='Domain number eg: { 1, 2, 3}.')
-    parser.add_argument('--run-tests',action="store_true",
-                        help='Run tests')
-    parser.add_argument('-fg','--run-foreground',action="store_true",
-                        help='set this to run ncl process to run in foreground')
-
-    arg_parse(**vars(parser.parse_args(args)))
-
 if __name__ == '__main__':
-    main()
+    import wrfout
+    wrfout.main()
