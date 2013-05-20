@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-WRFOUT module
+WRFOUT Module
 """
 
 from .util import _get_logger, find_inputfile

@@ -18,7 +18,7 @@ WO is top level invoke script to run WRFOUT.
 
 AUTHOR = "Yagnesh Raghava Yakkala"
 WEBSITE = "http://github.com/yyr/wrfout"
-LICENSE ="GPL v3 or later"
+LICENSE = "GPL v3 or later"
 
 import os
 import inspect
