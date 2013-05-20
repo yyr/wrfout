@@ -2,9 +2,9 @@
 Plotting routines.
 '''
 
-import util
+from wrfout import util
 import Nio
-from .conf import config
+from wrfout.conf import config
 
 PLOTVARS = ['HGT']
 lgr = util._get_logger()

@@ -5,7 +5,7 @@
 Configuration data for plots.
 '''
 
-from .py3compat import utf8
+from wrfout.py3compat import utf8
 import ConfigParser
 import io
 
