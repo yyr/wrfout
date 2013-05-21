@@ -1,7 +1,21 @@
 #!/usr/bin/env python
+# [[[cog import cog; cog.out('"""\n{0}\n"""'.format(file('./README.rst').read()))]]]
 """
-WRFOUT Module
+WRFOUT
+======
+Common visualizations for WRF model output.
+
+License
+-------
+GPL v3 (or later)
+
 """
+# [[[end]]]
+
+AUTHOR = "Yagnesh Raghava Yakkala"
+WEBSITE = "http://github.com/yyr/wrfout"
+LICENSE = "GPL v3 or later"
+VERSION = '0.1dev'
 
 from .util import _get_logger, find_inputfile
 from .plot import _plot_vars
