@@ -59,10 +59,16 @@ def var_grouped(fh, by_type="dimension"):
     return {'1d': o_d, '2d': t_d, '3d': th_d, '4d': f_d}
 
 
-def rankof(var, fh=None, filevar=True):
-    if filevar and fh is not None:
-        return fh.variables[var].rank
-    return None
+def ntimes(v):
+    tname = 'Time' if 'Time' in v.dimensions else 'time'
+    try:
+        tid = v.dimensions.index(tname)
+        return v.shape[tid]
+    except ValueError:
+        tid = v.dimensions.index('t')
+        return v.shape[tid]
+    except:
+        return None
 
 if __name__ == '__main__':
     pass
