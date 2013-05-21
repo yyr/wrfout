@@ -18,3 +18,4 @@ filedump*
 model*
 
 backup/*
+/build/*
