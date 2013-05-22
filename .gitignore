@@ -7,6 +7,7 @@
 
 # python
 *.pyc
+doc/build
 
 # other
 TAGS
