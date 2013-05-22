@@ -1,14 +1,15 @@
 #!/usr/bin/env python
-# [[[cog import cog; cog.out('"""\n{0}\n"""'.format(file('./README.rst').read()))]]]
+# [[[cog import cog; cog.out('{0}'.format(file('./README.rst').read()))]]]
 """
-WRFOUT
-======
-Common visualizations for WRF model output.
+wrfout -- Library to plot & analyze WRF output.
+==============================================
+wrfout is a library to do common visualizations for WRF model output.
+It uses `PyNgl <https://www.pyngl.ucar.edu/index.shtml>`_
+
 
 License
 -------
-GPL v3 (or later)
-
+`wrfout` is licensed under GPL v3 (or later).
 """
 # [[[end]]]
 
