@@ -18,7 +18,7 @@ LICENSE = "GPL v3 or later"
 VERSION = '0.1dev'
 
 from .util import _get_logger, find_inputfile
-from .plot import _plot_vars
+from .core import _plot_vars
 import sys
 
 
