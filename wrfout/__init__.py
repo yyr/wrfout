@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# [[[cog import cog; cog.out('{0}'.format(file('./README.rst').read()))]]]
+# [[[cog import cog; cog.out('"""\n{0}"""'.format(file('./README.rst').read()))]]]
 """
 wrfout -- Library to plot & analyze WRF output.
 ==============================================
