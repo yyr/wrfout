@@ -1,6 +1,4 @@
-#!/usr/bin/env python
 # -*- coding: utf-8; -*-
-
 '''
 Configuration data for plots.
 '''
@@ -9,6 +7,7 @@ from wrfout.py3compat import utf8
 import ConfigParser
 import io
 
+PLOTVARS = ['HGT']
 default_config = utf8("""
 [HGT]
 title = Terrain Height

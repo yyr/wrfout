@@ -1,4 +1,5 @@
 from . import util
+import conf
 import Nio
 import Ngl
 
@@ -10,6 +11,13 @@ def _get_wks(wks_name, wks_type='ps'):
     wkres = Ngl.Resources()
     wkres.wkColorMap = "default"
     return Ngl.open_wks(wks_type, wks_name, wkres)
+
+
+def _plot_vars(filename):
+    out = wrfout(filename)
+    for varname in [v for v in conf.PLOTVARS if v in out._var_list]:
+        out.plot_var(varname)
+
 
 class wrfout(object):
     """Base class of wrfout file."""
