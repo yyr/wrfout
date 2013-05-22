@@ -11,18 +11,8 @@ def _get_wks(wks_name, wks_type='ps'):
     wkres.wkColorMap = "default"
     return Ngl.open_wks(wks_type, wks_name, wkres)
 
-
-def draw_2d(varname, v):
-    res = Ngl.Resources()
-    plot_name = 'wo_%s' % varname.lower()
-    lgr.info('plot name set to - %s' % plot_name)
-    wks = _get_wks(plot_name)
-    for t in range(3):
-        plot = Ngl.contour(wks, v[t,:,:], res)
-
-
 class wrfout(object):
-    """Base class of wrfout file. """
+    """Base class of wrfout file."""
     def __init__(self, filename, format='nc'):
         self._filename = filename
         self._fh = Nio.open_file(filename, mode="r", format=format)
@@ -70,4 +60,14 @@ class Plotter(object):
 
     def hplot(self, along='time'):
         if along == 'time':
-            draw_2d(self.varname, self.var)
+            self.draw_2d(self.varname, self.var)
+
+    def draw_2d(self, varname, v):
+        res = Ngl.Resources()
+        plot_name = 'wo_%s' % varname.lower()
+        lgr.info('plot name set to - %s' % plot_name)
+        wks = _get_wks(plot_name)
+        for t in range(3):
+            plot = Ngl.contour(wks, v[t,:,:], res)
+
+        return plot
