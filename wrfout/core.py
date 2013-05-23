@@ -13,10 +13,17 @@ def _get_wks(wks_name, wks_type='ps'):
     return Ngl.open_wks(wks_type, wks_name, wkres)
 
 
-def _plot_vars(filename):
+def _plot_vars(filename,var=None):
     out = wrfout(filename)
-    for varname in [v for v in conf.PLOTVARS if v in out._var_list]:
-        out.plot_var(varname)
+    if var is None:
+        for varname in [v for v in conf.PLOTVARS if v in out._var_list]:
+            out.plot_var(varname)
+    else:
+        for v in var:
+            if v in conf.PLOTVARS and v in out._var_list:
+                out.plot_var(varname)
+            else:
+                lgr.warn('"%s" is not variable in wrfout file' % v)
 
 
 class wrfout(object):

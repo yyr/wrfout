@@ -23,7 +23,8 @@ from .core import _plot_vars
 import sys
 
 
-def arg_parse(plot2d, log_file=None, in_file=None, log=None, log_level=None):
+def arg_parse(var, log_file=None, in_file=None,
+              log=None, log_level=None):
     """Parse arguments."""
     lgr = _get_logger()
     if log_level:
@@ -48,7 +49,8 @@ def arg_parse(plot2d, log_file=None, in_file=None, log=None, log_level=None):
 
         lgr.warn('considering "%s" as input file' % in_file)
 
-    _plot_vars(in_file)   # plot variables.
+    if var:
+        _plot_vars(in_file, var)   # plot variables.
 
 
 def main(args=None):
@@ -62,13 +64,15 @@ def main(args=None):
 
     parser.add_argument('-l', '--log', action='store_true',
                         help='Log wrfout actions.')
+
     parser.add_argument('--log-file', help='save wrfout logs to this file.')
     parser.add_argument('--log-level',
                         choices=['CRITICAL', 'ERROR', 'WARN', 'INFO', 'DEBUG'],
                         help='logging level for log file.')
 
-    parser.add_argument('plot2d', action='store_true',
-                        help='plot 2d variables.')
+    parser.add_argument('var', nargs='+',
+                        help='Plots variables which have proper configuration.')
+
 
     arg_parse(**vars(parser.parse_args(args)))
 
