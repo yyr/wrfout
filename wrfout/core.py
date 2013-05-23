@@ -2,7 +2,7 @@ from . import util
 import conf
 import Nio
 import Ngl
-
+import os.path
 
 lgr = util._get_logger()
 
@@ -13,15 +13,28 @@ def _get_wks(wks_name, wks_type='ps'):
     return Ngl.open_wks(wks_type, wks_name, wkres)
 
 
-def _plot_vars(filename,var=None):
-    out = wrfout(filename)
-    if var is None:
+def plot_vars(filename, variables=None):
+    """Top level function with
+
+    >>> from wrfout.core import plot_vars
+    >>> plot_vars('wrfout',variables = 'HGT')
+    """
+    if os.path.exists(filename):
+        out = wrfout(filename)
+    else:
+        lgr.error('No such file exists: %s' % filename)
+        import sys
+        sys.exit()
+
+    if variables is None:
         for varname in [v for v in conf.PLOTVARS if v in out._var_list]:
             out.plot_var(varname)
     else:
-        for v in var:
+        if isinstance(variables, str):
+            variables = [variables]
+        for v in variables:
             if v in conf.PLOTVARS and v in out._var_list:
-                out.plot_var(varname)
+                out.plot_var(v)
             else:
                 lgr.warn('"%s" is not variable in wrfout file' % v)
 

@@ -19,7 +19,7 @@ LICENSE = "GPL v3 or later"
 VERSION = '0.1dev'
 
 from .util import _get_logger, find_inputfile
-from .core import _plot_vars
+from .core import plot_vars
 import sys
 
 
@@ -50,7 +50,7 @@ def arg_parse(var, log_file=None, in_file=None,
         lgr.warn('considering "%s" as input file' % in_file)
 
     if var:
-        _plot_vars(in_file, var)   # plot variables.
+        plot_vars(in_file, var)   # plot variables.
 
 
 def main(args=None):
