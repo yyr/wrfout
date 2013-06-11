@@ -17,6 +17,8 @@ def _get_logger():
         logger.addHandler(hlr)
     return logger
 
+lgr = _get_logger()
+
 
 def find_inputfile(dom=3):
     """Search for files starts with wrfout_d0. If more than one file, chooses
