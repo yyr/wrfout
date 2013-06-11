@@ -19,11 +19,18 @@ def _get_logger():
 
 
 def find_inputfile(dom=3):
+    """Search for files starts with wrfout_d0. If more than one file, chooses
+    depend on the domain number.
+
+    :type dom: int
+    :rtype: str
+    """
     for f in os.listdir('.'):
-        if fnmatch.fnmatch(f, 'wrfout*' + 'd0' + str(dom) + '*'):
+        if fnmatch.fnmatch(f, 'wrfout_d0' + str(dom) + '*'):
             return f
         else:
-            return None
+            continue
+    return None
 
 
 def var_list(fh):
