@@ -157,15 +157,16 @@ scale =
 """)
 
 
-class ConfParser(ConfigParser.RawConfigParser):
-    """Wrapper to ConfigParser"""
+class woConf(ConfigParser.RawConfigParser):
+    """Wrapper to ConfigParser
+    """
     def read_string(self, string):
         """Later versions of ConfigParser has this feature."""
         s = io.StringIO(string)
         return self.readfp(s)
 
 
-config = ConfParser()
+config = woConf()
 config.read_string(default_config)
 
 

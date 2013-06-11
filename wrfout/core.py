@@ -48,6 +48,10 @@ class wrfout(object):
          # for a in self._fh.__dict__.keys():
         #     setattr(self, a, getattr(self._fh, a))
 
+    @property
+    def xlat(self):
+        return self._fh.variables['XLAT'].get_value()
+
     def var_list(self):
         return self._fh.variables.keys()
 
@@ -64,6 +68,14 @@ class wrfout(object):
                     self.th_d.append(var)
                 elif v.rank == 4:
                     self.f_d.append(var)
+        return
+
+
+    def get_coord(self, time=None):
+        if time is None:
+            time = 0
+
+        return self._fh.variables['XLAT']
 
     def rank(self, varname):
         return self._fh.variables[varname].rank
