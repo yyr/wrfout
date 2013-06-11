@@ -59,7 +59,7 @@ def main(args=None):
     parser = argparse.ArgumentParser(
         formatter_class=argparse.RawTextHelpFormatter,
         description=__doc__)
-    parser.add_argument('--in-file', default=None,
+    parser.add_argument('-i', '--in-file', default=None,
                         help='directories in which wrfout is to be run.')
 
     parser.add_argument('-l', '--log', action='store_true',
